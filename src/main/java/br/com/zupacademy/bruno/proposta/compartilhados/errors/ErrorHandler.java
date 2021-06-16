@@ -12,11 +12,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import feign.FeignException;
+
 @RestControllerAdvice
 public class ErrorHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ErrorResponse> handle(MethodArgumentNotValidException exception) {
+	public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
 
 		Collection<String> mensagens = new ArrayList<>();
         BindingResult bindingResult = exception.getBindingResult();
@@ -41,4 +43,13 @@ public class ErrorHandler {
 	    return ResponseEntity.status(exception.getHttpStatus()).body(errors);
 	}
 
+	@ExceptionHandler(FeignException.class)
+	public ResponseEntity<ErrorResponse> handleFeignException(FeignException exception) {
+	    Collection<String> mensagens = new ArrayList<>();
+	    mensagens.add(exception.getMessage());
+
+	    ErrorResponse errors = new ErrorResponse(mensagens);
+	    return ResponseEntity.status(exception.status()).body(errors);
+	}
+	
 }

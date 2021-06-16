@@ -2,13 +2,11 @@ package br.com.zupacademy.bruno.proposta.criarProposta;
 
 import java.net.URI;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,24 +14,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.solicitacaoAnaliseProposta.AnalisePropostaViaApi;
+
 @RestController	
 @RequestMapping("/api/propostas")
 public class PropostaController {
 	
 	private final Logger logger = LoggerFactory.getLogger(PropostaController.class);
-
-	@PersistenceContext
-	private EntityManager em;
+	
+	@Autowired
+	private PropostaRepository repository;
+	
+	@Autowired
+	private AnalisePropostaViaApi analiseApi;;
 	
 	@PostMapping
-	@Transactional
 	public ResponseEntity<?> gerar(@RequestBody @Valid PropostaRequest propostaRequest, UriComponentsBuilder uriBuilder) {
 		
 		Proposta novaProposta = propostaRequest.toModel();
 		
-		em.persist(novaProposta);
+		repository.saveAndFlush(novaProposta);
 		
-		logger.info("Proposta do nome = {} criada com sucesso!", novaProposta.getNome());
+		logger.info("Proposta do nome = {} e id = {} criada com sucesso!", novaProposta.getNome(), novaProposta.getId());
+		
+		if(analiseApi.verificarElegibilidade(novaProposta)) {
+			novaProposta.setElegibilidade(Elegibilidade.ELEGIVEL);
+			repository.saveAndFlush(novaProposta);
+		}
+		
+		logger.info("Análise de elegibilidade da proposta do nome = {} efetuada com sucesso", novaProposta.getNome());
 		
 		URI uri = uriBuilder.path("/propostas/{id}").buildAndExpand(novaProposta.getId()).toUri();
 		

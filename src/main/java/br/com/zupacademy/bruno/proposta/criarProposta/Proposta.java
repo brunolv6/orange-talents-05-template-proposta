@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,6 +45,9 @@ public class Proposta {
 	@NotNull
 	@PositiveOrZero
 	private BigDecimal salario;
+	
+	@Enumerated(EnumType.STRING)
+	private Elegibilidade elegibilidade = Elegibilidade.NAO_ELEGIVEL;
 
 	public Proposta(@NotEmpty @NotNull String documento, @NotEmpty @NotNull @Email String email,
 			@NotEmpty @NotNull String nome, @NotEmpty @NotNull String endereco,
@@ -56,14 +61,24 @@ public class Proposta {
 	}
 
 	public Long getId() {
-		 if(id == null){
-            throw new IllegalArgumentException("Id of Proposta must not be null");
-        }
+//		if (id == null) {
+//			throw new IllegalArgumentException("Id of Proposta must not be null");
+//		}
 		return id;
 	}
 
 	public String getNome() {
 		return nome;
 	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setElegibilidade(Elegibilidade elegibilidade) {
+		this.elegibilidade = elegibilidade;
+	}
+	
+	
 
 }
