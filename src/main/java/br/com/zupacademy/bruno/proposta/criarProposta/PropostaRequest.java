@@ -8,12 +8,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import br.com.zupacademy.bruno.proposta.compartilhados.validators.CPFOrCNPJ;
+import br.com.zupacademy.bruno.proposta.compartilhados.validators.Unico;
 
 public class PropostaRequest {
 
 	@NotEmpty
 	@NotNull
 	@CPFOrCNPJ
+	@Unico(entidade = Proposta.class, atributo = "documento")
 	private String documento;
 
 	@NotEmpty

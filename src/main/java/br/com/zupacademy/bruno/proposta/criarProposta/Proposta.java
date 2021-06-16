@@ -1,8 +1,8 @@
 package br.com.zupacademy.bruno.proposta.criarProposta;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +24,7 @@ public class Proposta {
 	@NotEmpty
 	@NotNull
 	@CPFOrCNPJ
+	@Column(unique = true)
 	private String documento;
 
 	@NotEmpty
@@ -55,7 +56,14 @@ public class Proposta {
 	}
 
 	public Long getId() {
+		 if(id == null){
+            throw new IllegalArgumentException("Id of Proposta must not be null");
+        }
 		return id;
+	}
+
+	public String getNome() {
+		return nome;
 	}
 
 }

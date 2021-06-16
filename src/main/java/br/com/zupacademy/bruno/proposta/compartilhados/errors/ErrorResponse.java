@@ -1,22 +1,17 @@
 package br.com.zupacademy.bruno.proposta.compartilhados.errors;
 
+import java.util.Collection;
+
 public class ErrorResponse {
-	private String field;
 
-	private String error;
+	private Collection<String> mensagens;
 
-	public ErrorResponse(String field, String error) {
-		super();
-		this.field = field;
-		this.error = error;
+	public ErrorResponse(Collection<String> mensagens) {
+		this.mensagens = mensagens;
 	}
 
-	public String getField() {
-		return field;
-	}
-
-	public String getError() {
-		return error;
+	public Collection<String> getMensagens() {
+		return mensagens;
 	}
 
 }
