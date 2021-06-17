@@ -26,7 +26,7 @@ public class PropostaController {
 	private PropostaRepository repository;
 	
 	@Autowired
-	private AnalisePropostaViaApi analiseApi;;
+	private AnalisePropostaViaApi analiseProposta;;
 	
 	@PostMapping
 	public ResponseEntity<?> gerar(@RequestBody @Valid PropostaRequest propostaRequest, UriComponentsBuilder uriBuilder) {
@@ -37,7 +37,7 @@ public class PropostaController {
 		
 		logger.info("Proposta do nome = {} e id = {} criada com sucesso!", novaProposta.getNome(), novaProposta.getId());
 		
-		if(analiseApi.verificarElegibilidade(novaProposta)) {
+		if(analiseProposta.verificarElegibilidade(novaProposta)) {
 			novaProposta.setElegibilidade(Elegibilidade.ELEGIVEL);
 			repository.saveAndFlush(novaProposta);
 		}

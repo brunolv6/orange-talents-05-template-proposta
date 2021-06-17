@@ -25,8 +25,10 @@ public class AnalisePropostaViaApi implements AnalisePropostaInterface {
 		
 		try {
 			ResponseAnaliseProposta responseAnaliseProposta = apiClient.solicitar(requestAnaliseProposta);
+			// response deve possuir atributo resultadoSolicitação com SEM_RESTRICAO - elegível ou COM RESTRICAO - não elegível
 			return responseAnaliseProposta.getResultadoSolicitacao().contains("SEM_RESTRICAO");
 		} catch (FeignException e) {
+			// no caso de recebermos uma exceção, se for 422 pode ser que tenha o body com o resultadoSolicitação COM_RESTRICAO - não elegível
 			if(e.status() == 422 && e.contentUTF8().contains("COM_RESTRICAO")) {
 				return false;
 			}
