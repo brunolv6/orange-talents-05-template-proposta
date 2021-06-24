@@ -2,6 +2,7 @@ package br.com.zupacademy.bruno.proposta.criarProposta;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,12 +10,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import br.com.zupacademy.bruno.proposta.compartilhados.validators.CPFOrCNPJ;
+import br.com.zupacademy.bruno.proposta.criarCartao.Cartao;
 
 @Entity
 public class Proposta {
@@ -45,9 +48,17 @@ public class Proposta {
 	@NotNull
 	@PositiveOrZero
 	private BigDecimal salario;
-	
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Cartao cartao = null;
+
 	@Enumerated(EnumType.STRING)
 	private Elegibilidade elegibilidade = Elegibilidade.NAO_ELEGIVEL;
+
+	@Deprecated
+	public Proposta() {
+		super();
+	}
 
 	public Proposta(@NotEmpty @NotNull String documento, @NotEmpty @NotNull @Email String email,
 			@NotEmpty @NotNull String nome, @NotEmpty @NotNull String endereco,
@@ -78,7 +89,15 @@ public class Proposta {
 	public void setElegibilidade(Elegibilidade elegibilidade) {
 		this.elegibilidade = elegibilidade;
 	}
-	
-	
+
+	public void setCartao(Cartao cartao) {
+		this.cartao = cartao;
+	}
+
+	@Override
+	public String toString() {
+		return "Proposta [id=" + id + ", documento=" + documento + ", email=" + email + ", nome=" + nome + ", endereco="
+				+ endereco + ", salario=" + salario + ", cartao=" + cartao + ", elegibilidade=" + elegibilidade + "]";
+	}
 
 }

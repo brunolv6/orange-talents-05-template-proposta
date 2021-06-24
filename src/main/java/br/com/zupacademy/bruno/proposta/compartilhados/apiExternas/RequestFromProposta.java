@@ -1,6 +1,6 @@
-package br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.solicitacaoAnaliseProposta;
+package br.com.zupacademy.bruno.proposta.compartilhados.apiExternas;
 
-public class RequestAnaliseProposta {
+public class RequestFromProposta {
 
 	private String documento;
 
@@ -8,7 +8,7 @@ public class RequestAnaliseProposta {
 
 	private String idProposta;
 
-	public RequestAnaliseProposta(String documento, String nome, Long id) {
+	public RequestFromProposta(String documento, String nome, Long id) {
 		super();
 		this.documento = documento;
 		this.nome = nome;

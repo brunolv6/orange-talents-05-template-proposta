@@ -25,7 +25,7 @@ public class AnalisePropostaApiHealthCheck implements HealthIndicator {
     	Map<String, Object> details = new HashMap<>();
 	        details.put("description", "External API to make analisys of proposal");
 	        details.put("url", "http://"+ host +":"+ port);
-  
+
         try {
 //			boolean reachable = InetAddress.getByName(URL).isReachable(5000);
         	Socket socket = new Socket(host, port);

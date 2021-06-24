@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.solicitacaoAnaliseProposta.AnalisePropostaViaApi;
+import br.com.zupacademy.bruno.proposta.criarCartao.CriarCartaoParaProposta;
 
 @RestController	
 @RequestMapping("/api/propostas")
@@ -26,7 +27,10 @@ public class PropostaController {
 	private PropostaRepository repository;
 	
 	@Autowired
-	private AnalisePropostaViaApi analiseProposta;;
+	private AnalisePropostaViaApi analiseProposta;
+	
+	@Autowired
+	private CriarCartaoParaProposta criarCartaoParaProposta;
 	
 	@PostMapping
 	public ResponseEntity<?> gerar(@RequestBody @Valid PropostaRequest propostaRequest, UriComponentsBuilder uriBuilder) {
@@ -40,6 +44,10 @@ public class PropostaController {
 		if(analiseProposta.verificarElegibilidade(novaProposta)) {
 			novaProposta.setElegibilidade(Elegibilidade.ELEGIVEL);
 			repository.saveAndFlush(novaProposta);
+			
+			criarCartaoParaProposta.solicitarCriacao(novaProposta);
+			System.out.println("pós-solicitacao elegível");
+			
 		}
 		
 		logger.info("Análise de elegibilidade da proposta do nome = {} efetuada com sucesso", novaProposta.getNome());

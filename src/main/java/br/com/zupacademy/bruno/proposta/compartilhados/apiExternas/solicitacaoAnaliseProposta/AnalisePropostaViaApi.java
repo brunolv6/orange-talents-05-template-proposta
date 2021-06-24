@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.RequestFromProposta;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.solicitacaoAnaliseProposta.feignClient.AnalisePropostaApiClient;
 import br.com.zupacademy.bruno.proposta.criarProposta.Proposta;
 import feign.FeignException;
@@ -19,12 +20,12 @@ public class AnalisePropostaViaApi implements AnalisePropostaInterface {
 
 	@Override
 	public Boolean verificarElegibilidade(Proposta proposta) {
-		RequestAnaliseProposta requestAnaliseProposta = new RequestAnaliseProposta(proposta.getDocumento(), proposta.getNome(), proposta.getId());	
+		RequestFromProposta requestFromProposta = new RequestFromProposta(proposta.getDocumento(), proposta.getNome(), proposta.getId());	
 		
 		logger.info("Indo analisar elegibilidade da proposta do nome = {}", proposta.getNome());		
 		
 		try {
-			ResponseAnaliseProposta responseAnaliseProposta = apiClient.solicitar(requestAnaliseProposta);
+			ResponseAnaliseProposta responseAnaliseProposta = apiClient.solicitar(requestFromProposta);
 			// response deve possuir atributo resultadoSolicitação com SEM_RESTRICAO - elegível ou COM RESTRICAO - não elegível
 			return responseAnaliseProposta.getResultadoSolicitacao().contains("SEM_RESTRICAO");
 		} catch (FeignException e) {
