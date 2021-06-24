@@ -86,6 +86,26 @@ public class Proposta {
 		return documento;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public BigDecimal getSalario() {
+		return salario;
+	}
+
+	public Cartao getCartao() {
+		return cartao;
+	}
+
+	public Elegibilidade getElegibilidade() {
+		return elegibilidade;
+	}
+
 	public void setElegibilidade(Elegibilidade elegibilidade) {
 		this.elegibilidade = elegibilidade;
 	}

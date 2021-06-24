@@ -28,7 +28,7 @@ public class Cartao {
 	@NotNull
 	@PositiveOrZero
 	private BigDecimal limite;
-	
+
 	@Deprecated
 	public Cartao() {
 		super();
@@ -40,6 +40,18 @@ public class Cartao {
 		this.id = id;
 		this.emitidoEm = emitidoEm;
 		this.limite = limite;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public LocalDateTime getEmitidoEm() {
+		return emitidoEm;
+	}
+
+	public BigDecimal getLimite() {
+		return limite;
 	}
 
 }
