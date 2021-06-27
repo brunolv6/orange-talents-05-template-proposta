@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.RequestFromProposta;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.solicitacaoAnaliseProposta.ResponseAnaliseProposta;
 
-@FeignClient( url = "http://localhost:9999", name = "analiseproposta")
+@FeignClient( url = "${spring.analise.url}", name = "analiseproposta")
 public interface AnalisePropostaApiClient {
 	
 	@PostMapping("/api/solicitacao")

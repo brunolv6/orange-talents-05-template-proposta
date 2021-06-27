@@ -107,6 +107,34 @@ services:
     environment:
       COLLECTOR_ZIPKIN_HTTP_PORT: 9411
 
+  proposta-mysql:
+    image: mysql:latest
+    container_name: proposta-mysql
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=senha
+      - MYSQL_DATABASE=db_proposta
+    ports:
+      - "6060:3306"
+
+  proposta-microservice:
+    build: .
+    image: brunolv6/proposta-microservice:latest
+    container_name: proposta-microservice
+    depends_on:
+      - "proposta-mysql"
+      - "analise"
+      - "contas"
+    environment:
+      - MYSQL_DB_URL=jdbc:mysql://proposta-mysql:3306/db_proposta
+      - MYSQL_DB_USERNAME=root
+      - MYSQL_DB_PASSWORD=senha
+      - CONTAS_API=http://contas:8888
+      - ANALISE_API=http://analise:9999
+    ports:
+      - "9091:8080"
+    restart: on-failure
+
   prometheus:
     image: prom/prometheus
     volumes:

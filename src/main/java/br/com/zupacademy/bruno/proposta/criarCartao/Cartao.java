@@ -22,7 +22,6 @@ public class Cartao {
 	private String id;
 
 	@NotNull
-	@PastOrPresent
 	private LocalDateTime emitidoEm;
 
 	@NotNull
@@ -34,7 +33,7 @@ public class Cartao {
 		super();
 	}
 
-	public Cartao(@NotNull @NotEmpty String id, @NotNull @PastOrPresent LocalDateTime emitidoEm,
+	public Cartao(@NotNull @NotEmpty String id, @NotNull LocalDateTime emitidoEm,
 			@NotNull @PositiveOrZero BigDecimal limite) {
 		super();
 		this.id = id;

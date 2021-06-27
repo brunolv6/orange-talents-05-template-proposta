@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.RequestFromProposta;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.ResponseCartao;
 
-@FeignClient(url = "http://localhost:8888", name = "cartaoApi")
+@FeignClient(url = "${spring.contas.url}", name = "cartaoApi")
 public interface CartaoAPIClient {
 
 	@PostMapping("/api/cartoes")

@@ -1,4 +1,4 @@
-package br.com.zupacademy.bruno.proposta.compartilhados.validators;
+	package br.com.zupacademy.bruno.proposta.compartilhados.validators;
 
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;
@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 @Constraint(validatedBy = { UnicoValidator.class })
 public @interface Unico {
-	String message() default "Already exists"; 
+	String message() default "Já existe"; 
 	 
 	Class<?>[] groups() default {}; 
  
@@ -24,3 +24,4 @@ public @interface Unico {
 	
 	String atributo();
 }
+
