@@ -23,7 +23,7 @@ public class CartaoResponse {
 
 	public CartaoResponse(Cartao cartao) {
 		super();
-		this.id = cartao.getId();
+		this.id = cartao.getIdCartao();
 		this.emitidoEm = cartao.getEmitidoEm();
 		this.limite = cartao.getLimite();
 	}

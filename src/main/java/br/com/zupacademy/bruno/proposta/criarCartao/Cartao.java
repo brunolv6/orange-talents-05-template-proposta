@@ -1,12 +1,13 @@
 package br.com.zupacademy.bruno.proposta.criarCartao;
 
+import br.com.zupacademy.bruno.proposta.adicionarBiometria.Biometria;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -16,10 +17,13 @@ import javax.validation.constraints.PositiveOrZero;
 public class Cartao {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@NotNull
 	@NotEmpty
 	@Column(unique = true)
-	private String id;
+	private String idCartao;
 
 	@NotNull
 	private LocalDateTime emitidoEm;
@@ -28,21 +32,28 @@ public class Cartao {
 	@PositiveOrZero
 	private BigDecimal limite;
 
+	@OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+	private List<Biometria> biometrias = new ArrayList<>();
+
 	@Deprecated
 	public Cartao() {
 		super();
 	}
 
-	public Cartao(@NotNull @NotEmpty String id, @NotNull LocalDateTime emitidoEm,
+	public Cartao(@NotNull @NotEmpty String idCartao, @NotNull LocalDateTime emitidoEm,
 			@NotNull @PositiveOrZero BigDecimal limite) {
 		super();
-		this.id = id;
+		this.idCartao = idCartao;
 		this.emitidoEm = emitidoEm;
 		this.limite = limite;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
+	}
+
+	public String getIdCartao() {
+		return idCartao;
 	}
 
 	public LocalDateTime getEmitidoEm() {
@@ -51,6 +62,10 @@ public class Cartao {
 
 	public BigDecimal getLimite() {
 		return limite;
+	}
+
+	public void setBiometrias(Biometria biometria) {
+		this.biometrias.add(biometria);
 	}
 
 }
