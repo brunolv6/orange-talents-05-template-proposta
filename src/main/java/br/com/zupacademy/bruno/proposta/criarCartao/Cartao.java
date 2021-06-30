@@ -43,6 +43,9 @@ public class Cartao {
 	@OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
 	private List<Bloqueio> bloqueios = new ArrayList<>();
 
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.DISPONIVEL;
+
 	@Deprecated
 	public Cartao() {
 		super();
@@ -83,6 +86,10 @@ public class Cartao {
 
 	public Boolean isThisUserId(String possivelUserId){
 		return userId.equals(possivelUserId);
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public String getUserId() {

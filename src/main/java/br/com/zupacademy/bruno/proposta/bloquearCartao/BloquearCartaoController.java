@@ -6,6 +6,7 @@ import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCart
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.feignClient.CartaoAPIClient;
 import br.com.zupacademy.bruno.proposta.compartilhados.errors.ApiException;
 import br.com.zupacademy.bruno.proposta.criarCartao.Cartao;
+import br.com.zupacademy.bruno.proposta.criarCartao.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,10 @@ public class BloquearCartaoController {
         novoBloqueio.setBloqueioEfetuado(true);
 
         em.merge(novoBloqueio);
+
+        cartao.setStatus(Status.BLOQUEADO);
+
+        em.merge(cartao);
 
         logger.info("Bloqueio de id = {} foi confirmado no sistema interno", novoBloqueio.getId());
 
