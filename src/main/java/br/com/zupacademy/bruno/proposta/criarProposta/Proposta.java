@@ -55,6 +55,10 @@ public class Proposta {
 	@Enumerated(EnumType.STRING)
 	private Elegibilidade elegibilidade = Elegibilidade.NAO_ELEGIVEL;
 
+	@NotNull
+	@NotEmpty
+	private String userId;
+
 	@Deprecated
 	public Proposta() {
 		super();
@@ -62,13 +66,14 @@ public class Proposta {
 
 	public Proposta(@NotEmpty @NotNull String documento, @NotEmpty @NotNull @Email String email,
 			@NotEmpty @NotNull String nome, @NotEmpty @NotNull String endereco,
-			@NotNull @PositiveOrZero BigDecimal salario) {
+			@NotNull @PositiveOrZero BigDecimal salario, @NotEmpty @NotNull String userId) {
 		super();
 		this.documento = documento;
 		this.email = email;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.salario = salario;
+		this.userId = userId;
 	}
 
 	public Long getId() {
@@ -114,10 +119,7 @@ public class Proposta {
 		this.cartao = cartao;
 	}
 
-	@Override
-	public String toString() {
-		return "Proposta [id=" + id + ", documento=" + documento + ", email=" + email + ", nome=" + nome + ", endereco="
-				+ endereco + ", salario=" + salario + ", cartao=" + cartao + ", elegibilidade=" + elegibilidade + "]";
+	public String getUserId() {
+		return userId;
 	}
-
 }

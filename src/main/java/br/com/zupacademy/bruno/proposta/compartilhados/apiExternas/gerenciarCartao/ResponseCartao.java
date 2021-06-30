@@ -51,8 +51,8 @@ public class ResponseCartao {
 				+ idProposta + ", limite=" + limite + "]";
 	}
 
-	public Cartao toModel() {
-		return new Cartao(this.id, this.emitidoEm, this.limite);
+	public Cartao toModel(String userId) {
+		return new Cartao(this.id, this.emitidoEm, this.limite, userId);
 	}
 
 }

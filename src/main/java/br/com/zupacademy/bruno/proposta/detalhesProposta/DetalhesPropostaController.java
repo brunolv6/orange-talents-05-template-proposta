@@ -30,8 +30,6 @@ public class DetalhesPropostaController {
 	@Transactional
 	public ResponseEntity<?> detalhar(@PathVariable Long id, Authentication authentication) {
 
-		System.out.println(authentication.getName());
-
 		Proposta proposta = em.find(Proposta.class, id);
 		
 		if(proposta == null) {

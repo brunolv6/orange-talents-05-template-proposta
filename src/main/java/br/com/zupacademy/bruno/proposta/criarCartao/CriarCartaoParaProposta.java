@@ -49,7 +49,7 @@ public class CriarCartaoParaProposta {
 	
 	private void persistirCartaoAtualizarProposta(Proposta proposta, ResponseCartao responseCartao) {
 
-		Cartao novoCartao = responseCartao.toModel();
+		Cartao novoCartao = responseCartao.toModel(proposta.getUserId());
 		
 		proposta.setCartao(novoCartao);
 		

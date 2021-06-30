@@ -1,10 +1,9 @@
 package br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.feignClient;
 
+import br.com.zupacademy.bruno.proposta.bloquearCartao.RequestCartaoBloqueio;
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.ResponseCartaoBloqueio;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.RequestFromProposta;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.ResponseCartao;
@@ -17,4 +16,7 @@ public interface CartaoAPIClient {
 	
 	@GetMapping("/api/cartoes")
 	ResponseCartao buscarCartao(@RequestParam String idProposta);
+
+	@PostMapping(path = "/api/cartoes/{id}/bloqueios", consumes = "application/json")
+	ResponseCartaoBloqueio bloquearCartao(@PathVariable String id, @RequestBody RequestCartaoBloqueio requestCartaoBloqueio);
 }

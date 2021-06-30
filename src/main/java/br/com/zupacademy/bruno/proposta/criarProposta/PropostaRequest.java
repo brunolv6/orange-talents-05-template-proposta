@@ -52,8 +52,8 @@ public class PropostaRequest {
 				+ endereco + ", salario=" + salario + "]";
 	}
 
-	public Proposta toModel() {
-		return new Proposta(documento, email, nome, endereco, salario);
+	public Proposta toModel(String userId) {
+		return new Proposta(documento, email, nome, endereco, salario, userId);
 	}
 
 }
