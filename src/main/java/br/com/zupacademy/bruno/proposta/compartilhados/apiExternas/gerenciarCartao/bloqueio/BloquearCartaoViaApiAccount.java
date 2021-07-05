@@ -1,7 +1,5 @@
 package br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.bloqueio;
 
-import br.com.zupacademy.bruno.proposta.bloquearCartao.RequestCartaoBloqueio;
-import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.ResponseCartaoBloqueio;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.feignClient.CartaoAPIClient;
 import br.com.zupacademy.bruno.proposta.criarCartao.Cartao;
 import feign.FeignException;

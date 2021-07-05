@@ -1,4 +1,4 @@
-package br.com.zupacademy.bruno.proposta.bloquearCartao;
+package br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.bloqueio;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

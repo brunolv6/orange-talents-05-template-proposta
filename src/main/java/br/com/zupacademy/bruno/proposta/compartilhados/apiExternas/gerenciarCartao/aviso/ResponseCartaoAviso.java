@@ -1,8 +1,8 @@
-package br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao;
+package br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.aviso;
 
-public class ResponseCartaoBloqueio {
+public class ResponseCartaoAviso {
 
-    private String resultado;
+	private String resultado;
 
     public void setResultado(String resultado) {
         this.resultado = resultado;
@@ -14,8 +14,9 @@ public class ResponseCartaoBloqueio {
 
     @Override
     public String toString() {
-        return "ResponseCartaoBloqueio{" +
+        return "ResponseCartaoAviso{" +
                 "resultado='" + resultado + '\'' +
                 '}';
     }
+
 }

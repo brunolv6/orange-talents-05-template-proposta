@@ -57,10 +57,20 @@ public class Aviso {
 		return id;
 	}
 
-	@Override
-	public String toString() {
-		return "Aviso [id=" + id + ", createdAt=" + createdAt + ", terminoViagem=" + terminoViagem + ", ip=" + ip
-				+ ", destino=" + destino + "]";
+	public LocalDate getTerminoViagem() {
+		return terminoViagem;
+	}
+
+	public void setTerminoViagem(LocalDate terminoViagem) {
+		this.terminoViagem = terminoViagem;
+	}
+
+	public String getDestino() {
+		return destino;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
 	}
 
 }

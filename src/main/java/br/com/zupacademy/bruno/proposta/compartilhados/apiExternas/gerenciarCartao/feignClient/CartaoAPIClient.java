@@ -1,12 +1,14 @@
 package br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.feignClient;
 
-import br.com.zupacademy.bruno.proposta.bloquearCartao.RequestCartaoBloqueio;
-import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.ResponseCartaoBloqueio;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.RequestFromProposta;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.ResponseCartao;
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.aviso.RequestCartaoAviso;
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.aviso.ResponseCartaoAviso;
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.bloqueio.RequestCartaoBloqueio;
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.bloqueio.ResponseCartaoBloqueio;
 
 @FeignClient(url = "${spring.contas.url}", name = "cartaoApi")
 public interface CartaoAPIClient {
@@ -19,4 +21,7 @@ public interface CartaoAPIClient {
 
 	@PostMapping(path = "/api/cartoes/{id}/bloqueios", consumes = "application/json")
 	ResponseCartaoBloqueio bloquearCartao(@PathVariable String id, @RequestBody RequestCartaoBloqueio requestCartaoBloqueio);
+	
+	@PostMapping(path = "/api/cartoes/{id}/avisos", consumes = "application/json")
+	ResponseCartaoAviso avisarCartao(@PathVariable String id, @RequestBody RequestCartaoAviso requestCartaoAviso);
 }

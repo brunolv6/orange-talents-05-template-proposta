@@ -1,8 +1,8 @@
 package br.com.zupacademy.bruno.proposta.bloquearCartao;
 
 import br.com.zupacademy.bruno.proposta.adicionarBiometria.AdicionarBiometriaController;
-import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.ResponseCartaoBloqueio;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.bloqueio.BloquearCartaoViaApiAccount;
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.bloqueio.ResponseCartaoBloqueio;
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.feignClient.CartaoAPIClient;
 import br.com.zupacademy.bruno.proposta.compartilhados.errors.ApiException;
 import br.com.zupacademy.bruno.proposta.criarCartao.Cartao;
