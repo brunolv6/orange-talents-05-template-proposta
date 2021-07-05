@@ -16,7 +16,7 @@ import feign.FeignException;
 @Component
 public class AvisarCartaoViaApiAccount implements AvisarCartaoInterface {
 
-	private final Logger logger = LoggerFactory.getLogger(BloquearCartaoViaApiAccount.class);
+	private final Logger logger = LoggerFactory.getLogger(AvisarCartaoViaApiAccount.class);
 
     @PersistenceContext
     private EntityManager em;

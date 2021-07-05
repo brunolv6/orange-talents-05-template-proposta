@@ -43,7 +43,6 @@ public class Aviso {
 	@ManyToOne
 	private Cartao cartao;
 
-	@JsonCreator
 	public Aviso(@NotNull @Future LocalDate terminoViagem, @NotNull @NotBlank String ip,
 			@NotNull @NotBlank String destino, Cartao cartao) {
 		super();

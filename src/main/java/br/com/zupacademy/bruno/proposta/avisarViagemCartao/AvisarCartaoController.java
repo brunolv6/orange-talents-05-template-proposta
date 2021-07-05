@@ -1,11 +1,11 @@
 package br.com.zupacademy.bruno.proposta.avisarViagemCartao;
 
 
-import br.com.zupacademy.bruno.proposta.bloquearCartao.Bloqueio;
-import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.aviso.AvisarCartaoViaApiAccount;
-import br.com.zupacademy.bruno.proposta.compartilhados.errors.ApiException;
-import br.com.zupacademy.bruno.proposta.criarCartao.Cartao;
-import br.com.zupacademy.bruno.proposta.criarCartao.Status;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.gerenciarCartao.aviso.AvisarCartaoViaApiAccount;
+import br.com.zupacademy.bruno.proposta.compartilhados.errors.ApiException;
+import br.com.zupacademy.bruno.proposta.criarCartao.Cartao;
 
 @RestController
 @RequestMapping("/api/cartoes")

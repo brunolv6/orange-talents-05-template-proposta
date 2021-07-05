@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import br.com.zupacademy.bruno.proposta.adicionarBiometria.Biometria;
+import br.com.zupacademy.bruno.proposta.associarCarteira.Carteira;
 import br.com.zupacademy.bruno.proposta.avisarViagemCartao.Aviso;
 import br.com.zupacademy.bruno.proposta.bloquearCartao.Bloqueio;
 
@@ -53,6 +54,9 @@ public class Cartao {
 	
 	@OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
 	private List<Aviso> avisos = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+	private List<Carteira> carteiras = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.DISPONIVEL;
@@ -97,6 +101,10 @@ public class Cartao {
 	
 	public void setAviso(Aviso aviso) {
 		this.avisos.add(aviso);
+	}
+	
+	public void setCarteiras(Carteira carteira) {
+		this.carteiras.add(carteira);
 	}
 
 	public Boolean isThisUserId(String possivelUserId){
