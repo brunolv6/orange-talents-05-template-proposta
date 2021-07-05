@@ -52,7 +52,7 @@ public class AssociarCarteiraController {
 
         if(!cartao.isThisUserId(authentication.getName())) throw new ApiException(HttpStatus.UNAUTHORIZED, "Não autorizado!");
         
-        // verificar se cartao já está associado a este tipo de carteira
+        // verificar se cartao já está associado a este tipo de carteira, modelo genérico que recebe diferentes carteiras, como paypal e samsung pay
         if(!associarCartaoApi.associarCarteira(cartao, carteiraRequest.getEmail(), carteiraRequest.getCarteira())) throw new ApiException(HttpStatus.UNPROCESSABLE_ENTITY, "Carteira já associada ao cartão");
         
         logger.info("Cartão de id = {} foi associado a nova carteira no servidor externo account", cartao.getId());
