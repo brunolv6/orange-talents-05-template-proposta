@@ -7,15 +7,20 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import br.com.zupacademy.bruno.proposta.compartilhados.config.Criptografia;
 import br.com.zupacademy.bruno.proposta.compartilhados.validators.CPFOrCNPJ;
 import br.com.zupacademy.bruno.proposta.compartilhados.validators.Unico;
+import br.com.zupacademy.bruno.proposta.compartilhados.validators.UnicoEncriptografado;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PropostaRequest {
 
 	@NotEmpty
 	@NotNull
 	@CPFOrCNPJ
-	@Unico(entidade = Proposta.class, atributo = "documento")
+	@UnicoEncriptografado(entidade = Proposta.class, atributo = "documento")
 	private String documento;
 
 	@NotEmpty
@@ -60,8 +65,8 @@ public class PropostaRequest {
 				+ endereco + ", salario=" + salario + "]";
 	}
 
-	public Proposta toModel(String userId) {
-		return new Proposta(documento, email, nome, endereco, salario, userId);
+	public Proposta toModel(String userId, Criptografia criptografia) {
+		return new Proposta(criptografia.encriptografar(documento), email, nome, endereco, salario, userId);
 	}
 
 }

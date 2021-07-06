@@ -28,7 +28,6 @@ public class Proposta {
 
 	@NotEmpty
 	@NotNull
-	@CPFOrCNPJ
 	@Column(unique = true)
 	private String documento;
 

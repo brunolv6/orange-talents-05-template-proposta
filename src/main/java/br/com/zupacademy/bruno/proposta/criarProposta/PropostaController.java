@@ -4,10 +4,12 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
+import br.com.zupacademy.bruno.proposta.compartilhados.config.Criptografia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,14 +38,16 @@ public class PropostaController {
 	private final MeterRegistry metrica;
 	
 	private final Tracer tracer;
-	
 
-	public PropostaController(PropostaRepository repository, AnalisePropostaViaApi analiseProposta, CriarCartaoParaProposta criarCartaoParaProposta, MeterRegistry meterRegistry, Tracer tracer) {
+	private final Criptografia criptografia;
+
+	public PropostaController(PropostaRepository repository, AnalisePropostaViaApi analiseProposta, CriarCartaoParaProposta criarCartaoParaProposta, MeterRegistry meterRegistry, Tracer tracer, Criptografia criptografia) {
 		this.repository = repository;
 		this.analiseProposta = analiseProposta;
 		this.criarCartaoParaProposta = criarCartaoParaProposta;
 		this.metrica = meterRegistry;
 		this.tracer = tracer;
+		this.criptografia = criptografia;
 	}
 
 	@PostMapping
@@ -58,7 +62,7 @@ public class PropostaController {
 
         activeSpan.log("Iniciando requisição de nova Proposta!");
 		
-		Proposta novaProposta = propostaRequest.toModel(authentication.getName());
+		Proposta novaProposta = propostaRequest.toModel(authentication.getName(), criptografia);
 		
 		repository.saveAndFlush(novaProposta);
 		
@@ -73,16 +77,15 @@ public class PropostaController {
 			repository.saveAndFlush(novaProposta);
 			
 			criarCartaoParaProposta.solicitarCriacao(novaProposta);
-			System.out.println("pós-solicitacao elegível");
 			
 		} else {
 			propostaNaoElegiveis.increment();
 		}
 
 		logger.info("Análise de elegibilidade da proposta do nome = {} efetuada com sucesso", novaProposta.getNome());
-		
+
 		URI uri = uriBuilder.path("/propostas/{id}").buildAndExpand(novaProposta.getId()).toUri();
-		
+
 		return ResponseEntity.created(uri).build();
 	}
 	

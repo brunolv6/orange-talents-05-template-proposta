@@ -30,9 +30,7 @@ public class UnicoValidator implements ConstraintValidator<Unico, String> {
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		System.out.println(entidade.getName());
-		
-		System.out.println(atributo);
+
 		Query query = em.createQuery(("select 1 from " + entidade.getName() + " where " + atributo + "= :value"));
 		query.setParameter("value", value);
 
