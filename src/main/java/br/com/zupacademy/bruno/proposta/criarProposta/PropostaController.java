@@ -33,7 +33,7 @@ public class PropostaController {
 
 	private CriarCartaoParaProposta criarCartaoParaProposta;
 
-	private final MeterRegistry meterRegistry;
+	private final MeterRegistry metrica;
 	
 	private final Tracer tracer;
 	
@@ -42,7 +42,7 @@ public class PropostaController {
 		this.repository = repository;
 		this.analiseProposta = analiseProposta;
 		this.criarCartaoParaProposta = criarCartaoParaProposta;
-		this.meterRegistry = meterRegistry;
+		this.metrica = meterRegistry;
 		this.tracer = tracer;
 	}
 
@@ -64,11 +64,11 @@ public class PropostaController {
 		
 		logger.info("Proposta do nome = {} e id = {} criada com sucesso!", novaProposta.getNome(), novaProposta.getId());
 
-		Counter propostasElegiveis = meterRegistry.counter("proposta_elegiveis");
-		Counter propostasNaoElegiveis = meterRegistry.counter("proposta_nao_elegiveis");
+		Counter propostaElegiveis = metrica.counter("proposta_elegiveis");
+		Counter propostaNaoElegiveis = metrica.counter("proposta_nao_elegiveis");
 
 		if(analiseProposta.verificarElegibilidade(novaProposta)) {
-			propostasElegiveis.increment();
+			propostaElegiveis.increment();
 			novaProposta.setElegibilidade(Elegibilidade.ELEGIVEL);
 			repository.saveAndFlush(novaProposta);
 			
@@ -76,7 +76,7 @@ public class PropostaController {
 			System.out.println("pós-solicitacao elegível");
 			
 		} else {
-			propostasNaoElegiveis.increment();
+			propostaNaoElegiveis.increment();
 		}
 
 		logger.info("Análise de elegibilidade da proposta do nome = {} efetuada com sucesso", novaProposta.getNome());
