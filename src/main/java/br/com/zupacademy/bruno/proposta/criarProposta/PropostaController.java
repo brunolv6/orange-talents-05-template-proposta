@@ -4,12 +4,8 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.Gauge;
-import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +16,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.zupacademy.bruno.proposta.compartilhados.apiExternas.solicitacaoAnaliseProposta.AnalisePropostaViaApi;
 import br.com.zupacademy.bruno.proposta.criarCartao.CriarCartaoParaProposta;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 @RestController	
 @RequestMapping("/api/propostas")
@@ -34,16 +34,29 @@ public class PropostaController {
 	private CriarCartaoParaProposta criarCartaoParaProposta;
 
 	private final MeterRegistry meterRegistry;
+	
+	private final Tracer tracer;
+	
 
-	public PropostaController(PropostaRepository repository, AnalisePropostaViaApi analiseProposta, CriarCartaoParaProposta criarCartaoParaProposta, MeterRegistry meterRegistry) {
+	public PropostaController(PropostaRepository repository, AnalisePropostaViaApi analiseProposta, CriarCartaoParaProposta criarCartaoParaProposta, MeterRegistry meterRegistry, Tracer tracer) {
 		this.repository = repository;
 		this.analiseProposta = analiseProposta;
 		this.criarCartaoParaProposta = criarCartaoParaProposta;
 		this.meterRegistry = meterRegistry;
+		this.tracer = tracer;
 	}
 
 	@PostMapping
 	public ResponseEntity<?> gerar(@RequestBody @Valid PropostaRequest propostaRequest, UriComponentsBuilder uriBuilder, Authentication authentication) {
+		
+		// Testando OpenTracing
+        Span activeSpan = tracer.activeSpan();
+        
+        activeSpan.setTag("usuario.nome", propostaRequest.getNome());
+        
+        activeSpan.setBaggageItem("usuario.email", propostaRequest.getEmail());
+
+        activeSpan.log("Iniciando requisição de nova Proposta!");
 		
 		Proposta novaProposta = propostaRequest.toModel(authentication.getName());
 		

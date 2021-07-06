@@ -46,6 +46,14 @@ public class PropostaRequest {
 		this.salario = salario;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
 	@Override
 	public String toString() {
 		return "PropostaRequest [documento=" + documento + ", email=" + email + ", nome=" + nome + ", endereco="
